@@ -1,19 +1,43 @@
 #librairies importees 
 import random
-import keyboard
 import sys
 
 #fonctions utilitaires
 
+def config(myMap,configNb):
+    #pasSur de garder
+    return 0
+
+def isPlacable(myMap,coord):
+    #encore un problÃ¨me dans la fonction
+    i = -1
+    verifvar = 0
+    while i < 2:
+        k = - 1
+        while k < 2:
+            if k == 0 and i == 0:
+                k += 1
+            if myMap[coord[0] + i][coord[1] + k] == None:
+                verifvar += 1
+            k += 1
+        i += 1
+    if verifvar == 8:
+        return False
+    else:
+        return True
+
 def verif(myMap):
+
 
     return 0
 
-
+ 
 def verifCase(myMap, coord):
     if myMap[coord[0]][coord[1]] != None:
+        print("Veuillez entrer des valeurs valide \n")
         return False
     return True
+
 
 def verifDiagonal(myMap, playerColr, coord):
     
@@ -46,7 +70,11 @@ def Makemap(long,hauteur):
             subTable[j] = None
             
         table.append(subTable)
-        
+     #Temporaire
+    table[3][3] = 'Jaune'
+    table[3][4] = 'Vert'
+    table[4][3] = 'Bleu'
+    table[4][4] = 'Rouge'
     return table
 
 
@@ -76,12 +104,16 @@ def affMap(lst):
 
 
 userName = []
-nbPlayer = 0
+nbPlayer = int(input("Quelle est le nombre de joueur \n"))
 
-print("Quelles sont les longueurs des cotes souhaites")
-
+for i in range(nbPlayer):
+    print("Quel est le nom du joueur \n",i)
+    Name = input("")
+    userName.append(Name)
 
 # on laisse l'utilisateur choisir la taille du tableau
+print("Quelles sont les longueurs des cotes souhaites \n")
+
 long = int(input("longueur du plateau"))
 hauteur = int(input("largeur du plateau"))
 playerColorTable = ["Jaune","Vert","Bleu","Rouge"]
@@ -102,10 +134,10 @@ while play:
         verification = False
         while not verification:
             
-            choice = input("coord (allant de A a maxIndex et de 1 a maxIndex)")
+            choice = input("coord (allant de A a maxIndex et de 1 a maxIndex) \n")
             coord = convertCoordinate(choice)
-            verification = verifCase(myMap, coord)
-        #faut faire mettre fonction de verif just lo
+            verification = verifCase(myMap, coord) and isPlacable(myMap,coord)
+            
         myMap = placeBall(myMap,playerColorTable[i],coord[0],coord[1])
         
         affMap(myMap)
