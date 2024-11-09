@@ -8,16 +8,27 @@ def config(myMap,configNb):
     #pasSur de garder
     return 0
 
-def isPlacable(myMap,coord):
     #encore un problÃ¨me dans la fonction
+def isPlacable(myMap, coord):
     i = -1
     verifvar = 0
     while i < 2:
         k = - 1
         while k < 2:
+            
             if k == 0 and i == 0:
                 k += 1
-            if myMap[coord[0] + i][coord[1] + k] == None:
+            verifX,verifY = coord[0] + i,coord[1] + k
+            if verifX < 0:
+                i += 1
+            elif verifX == 8:
+                break
+            if verifY == 8:
+                break
+            elif verifY < 0:
+                k += 1
+            
+            if myMap[coord[0] + i][coord[1] + k] is None:
                 verifvar += 1
             k += 1
         i += 1
@@ -27,8 +38,6 @@ def isPlacable(myMap,coord):
         return True
 
 def verif(myMap):
-
-
     return 0
 
  

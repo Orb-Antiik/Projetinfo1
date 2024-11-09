@@ -1,0 +1,1 @@
+if (not 0 <= verifX  <= 8) or (not  0 <= verifY  <= 8):
