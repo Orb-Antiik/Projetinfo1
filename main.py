@@ -19,6 +19,7 @@ def isPlacable(myMap, coord):
             if k == 0 and i == 0:
                 k += 1
             verifX,verifY = coord[0] + i,coord[1] + k
+            
             if verifX < 0:
                 i += 1
             elif verifX == len(myMap):
@@ -28,14 +29,12 @@ def isPlacable(myMap, coord):
             elif verifY < 0:
                 k += 1
             
-            if myMap[coord[0] + i][coord[1] + k] == '⬜':
-                verifvar += 1
+            print(coord[1])
+            if myMap[coord[0] + i][coord[1] + k] != '⬜':
+                return True
             k += 1
         i += 1
-    if verifvar == 8:
-        return False
-    else:
-        return True
+    return False
 
 def verif(myMap):
     return 0
@@ -53,9 +52,22 @@ def verifDiagonal(myMap, playerColr, coord):
     return 0
 
 
-def verifLineColumn(myMap, playerColr, coord):
+"""def verifLineColumn(myMap, coord):
+    playerColr = myMap[coord[0]][coord[1]] 
+    #verif de ligne en premier
+    i = 0
+    while i != coord[1]:
+        if playerColr == myMap[coord[0]][i]:
+            for i in range(coord[1] - i):
+                if myMap[coord[0]][i] == '':
+                    return False
+        
+        i += 1
     
-    return 0
+    
+    
+    #verif de colonne en secon
+    return 0"""
 
 
 def replaceColor(playerColr):
