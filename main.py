@@ -29,7 +29,6 @@ def isPlacable(myMap, coord):
             elif verifY < 0:
                 k += 1
             
-            print(coord[1])
             if myMap[coord[0] + i][coord[1] + k] != '⬜':
                 return True
             k += 1
@@ -56,6 +55,7 @@ def verifDiagonal(myMap, playerColr, coord):
     playerColr = myMap[coord[0]][coord[1]] 
     #verif de ligne en premier
     i = 0
+    table = []
     while i != coord[1]:
         if playerColr == myMap[coord[0]][i]:
             for i in range(coord[1] - i):
@@ -80,7 +80,7 @@ def playerColor():
 
 
 # Cette fonction permet de creer une carte 
-def Makemap(long,hauteur):
+def makeMap(long,hauteur):
 
     table = []
 
@@ -147,7 +147,7 @@ random.shuffle(playerColorTable)
 print("l'ordre des joueur est", playerColorTable)
 
 
-myMap = Makemap(long, hauteur)
+myMap = makeMap(long, hauteur)
 affMap(myMap)
 play = True
 verification = False
@@ -164,7 +164,7 @@ while play:
             verification = verifCase(myMap, coord) and isPlacable(myMap,coord)
             
         myMap = placeBall(myMap,playerColorTable[i],coord[0],coord[1])
-        
+        """verifLineColumn(myMap,coord)"""
         
         
         affMap(myMap)
