@@ -11,7 +11,6 @@ def config(myMap,configNb):
 
 def isPlacable(myMap, coord):
     i = -1
-    verifvar = 0
     while i < 2:
         k = - 1
         while k < 2:
@@ -29,7 +28,6 @@ def isPlacable(myMap, coord):
             elif verifY < 0:
                 k += 1
             
-            print(coord[1])
             if myMap[coord[0] + i][coord[1] + k] != '⬜':
                 return True
             k += 1
@@ -41,6 +39,7 @@ def verif(myMap):
 
  
 def verifCase(myMap, coord):
+    
     if myMap[coord[0]][coord[1]] != '⬜':
         print("Veuillez entrer des valeurs valide \n")
         return False
@@ -66,18 +65,16 @@ def verifDiagonal(myMap, playerColr, coord):
     
     
     
-    #verif de colonne en secon
+    #verif de colonne en second
     return 0"""
 
 
-def replaceColor(playerColr):
+def replaceColor(playerColr,myMap,caseLst):
+    return None
     
-    return 0
-    
-def playerColor():
-    
-    return 0
+def playerColor(userName,playerColorTable):
 
+    return None
 
 # Cette fonction permet de creer une carte 
 def Makemap(long,hauteur):
@@ -91,26 +88,38 @@ def Makemap(long,hauteur):
             subTable[j] = '⬜'
             
         table.append(subTable)
-     #Temporaire
-    table[3][3] = '🟨'
-    table[3][4] = '🟩'
-    table[4][3] = '🟦'
-    table[4][4] = '🟥'
+        
+    middle = int(long/2)
+    if long % 2 == 0:
+        table[middle - 1][middle - 1] = '🟨'
+        table[middle - 1][middle] = '🟩'
+        table[middle ][middle - 1] ='🟦'
+        table[middle][middle] = '🟥'
+    else:
+        table[middle - 1][middle - 1] = '🟨'
+        table[middle - 1][middle + 1] = '🟩'
+        table[middle + 1][middle - 1] = '🟦'
+        table[middle + 1][middle + 1] = '🟥'
+  
     return table
 
 
 def convertCoordinate(choice):
-    if not (1 <= len(choice) <= 2):
+    if not (1 <= len(choice) <= 3):
         return None
+    if len(choice) == 3:
+        nbChoice = choice[1] + choice[2]
+    else:
+        nbChoice = choice[1]
     alphab = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     coordx = alphab.index(choice[0])
-    coordy = int(choice[1]) - 1
+    coordy = int(nbChoice) - 1
     coord = [coordx,coordy]
     return coord
 
 # Cette fonction permet de placer une boule sur la carte
-def placeBall(liste, playerColr:str, coordx,coordy):
+def placeBall(liste, playerColr, coordx,coordy):
     
     liste[coordx][coordy] = playerColr
     
