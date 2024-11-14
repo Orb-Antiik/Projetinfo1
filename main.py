@@ -32,6 +32,7 @@ def isPlacable(myMap, coord):
                 return True
             k += 1
         i += 1
+    print("Veuillez entrer des valeur valide")
     return False
 
 def verif(myMap):
@@ -68,7 +69,15 @@ def verifDiagonal(myMap, playerColr, coord):
     
     #verif de colonne en second
     return 0"""
-
+def player(colorTable,userName):
+    playerAndColorTable = []
+    for i in range(len(userName)):
+        print(userName[i],"choisissez une couleur \n 1-",colorTable[0],' \n 2-',colorTable[1],"\n 3-",colorTable[2],' \n 4-',colorTable[3])
+        plResponse = int(input("Numero de la couleur ")) - 1
+        playerAndColorTable.append([userName[i],colorTable[plResponse]])
+    print(playerAndColorTable) 
+        
+    return playerAndColorTable
 
 def replaceColor(playerColr,myMap,caseLst):
     return None
@@ -129,10 +138,16 @@ def placeBall(liste, playerColr, coordx,coordy):
 
 # Cette fonction affiche la carte
 def affMap(lst):
-    # temporaire
-    print("   1  2  3  4  5  6  7  8")
+
+    for i in range(len(lst)):
+        if i == 0:
+            print("   " ,end ='')
+        print(i + 1,end='  ')
+
     
     for i in range(len(lst)):
+       if i == 0:
+           print("")
        print(f"{chr(65 + i)} " + " ".join(x for x in lst[i]))
     
     return None
@@ -140,6 +155,7 @@ def affMap(lst):
 
 userName = []
 nbPlayer = int(input("Quelle est le nombre de joueur \n"))
+assert nbPlayer <= 4
 
 for i in range(nbPlayer):
     print("Quel est le nom du joueur \n",i)
@@ -147,17 +163,21 @@ for i in range(nbPlayer):
     userName.append(Name)
 
 # on laisse l'utilisateur choisir la taille du tableau
-print("Quelles sont les longueurs des cotes souhaites \n")
+print("Quelles sont les longueurs des cotes souhaites")
 
-long = int(input("longueur du plateau"))
-hauteur = int(input("largeur du plateau"))
+long = int(input("longueur du plateau \n"))
+hauteur = int(input("largeur du plateau \n"))
 playerColorTable = ["🟨","🟩","🟦","🟥"]
 random.shuffle(playerColorTable)
 
 print("l'ordre des joueur est", playerColorTable)
 
 
+
 myMap = makeMap(long, hauteur)
+player(playerColorTable,userName)
+myMap = makeMap(long, hauteur)
+
 affMap(myMap)
 play = True
 verification = False
@@ -174,8 +194,6 @@ while play:
             verification = verifCase(myMap, coord) and isPlacable(myMap,coord)
             
         myMap = placeBall(myMap,playerColorTable[i],coord[0],coord[1])
-        """verifLineColumn(myMap,coord)"""
-        
-        
+             
         affMap(myMap)
     #verif(myMap)
