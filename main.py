@@ -52,23 +52,9 @@ def verifDiagonal(myMap, playerColr, coord):
     return 0
 
 
-"""def verifLineColumn(myMap, coord):
-    playerColr = myMap[coord[0]][coord[1]] 
-    #verif de ligne en premier
-    i = 0
-    table = []
-    while i != coord[1]:
-        if playerColr == myMap[coord[0]][i]:
-            for i in range(coord[1] - i):
-                if myMap[coord[0]][i] == '':
-                    return False
-        
-        i += 1
-    
-    
-    
-    #verif de colonne en second
-    return 0"""
+def verifLineColumn(myMap, coord):
+
+    return 0
 def player(colorTable,userName):
     playerAndColorTable = []
     for i in range(len(userName)):
