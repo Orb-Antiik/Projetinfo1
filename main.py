@@ -8,7 +8,7 @@ import sys
 
 
 
-def is_placable(map, coord):
+def is_placable(my_map, coord):
     i = -1
     while i < 2:
         k = - 1
@@ -20,14 +20,14 @@ def is_placable(map, coord):
             
             if verifX < 0:
                 i += 1
-            elif verifX == len(map):
+            elif verifX == len(my_map):
                 break
-            if verifY == len(map[0]):
+            if verifY == len(my_map[0]):
                 break
             elif verifY < 0:
                 k += 1
             
-            if map[coord[0] + i][coord[1] + k] != '⬜':
+            if my_map[coord[0] + i][coord[1] + k] != '⬜':
                 return True
             k += 1
         i += 1
@@ -37,9 +37,9 @@ def is_placable(map, coord):
 
 
  
-def verif_case(map, coord):
+def verif_case(my_map, coord):
     
-    if map[coord[0]][coord[1]] != '⬜':
+    if my_map[coord[0]][coord[1]] != '⬜':
         print("Veuillez entrer des valeurs valide \n")
         return False
     return True
@@ -151,10 +151,10 @@ long = int(input("taille du plateau ? \n"))
 
 player_color_table = ["🟨","🟩","🟦","🟥"]
 
-map = map(long)
+my_map = make_map(long)
 player_and_colr_table = player_c(player_color_table,user_name)
 
-aff_map(map)
+aff_map(my_map)
 play = True
 verification = False
 #fonction principale de jeu
@@ -168,9 +168,9 @@ while play:
             print("coord allant de A a "f'{chr(65 + long - 1)}' " et de 1 a",long)
             choice = input("")
             coord = convert_coordinate(choice)
-            verification = verif_case(map, coord) and is_placable(map,coord)
+            verification = verif_case(my_map, coord) and is_placable(my_map,coord)
             
-        map = place_ball(map,player_and_colr_table[i][1],coord[0],coord[1])
+        my_map = place_ball(my_map,player_and_colr_table[i][1],coord[0],coord[1])
              
-        aff_map(map)
-    #verif(map)
+        aff_map(my_map)
+    #verif(my_map)2
