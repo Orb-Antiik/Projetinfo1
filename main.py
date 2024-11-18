@@ -4,14 +4,11 @@ import sys
 
 #fonctions utilitaires
 
-def config(myMap,configNb):
-    #pasSur de garder
-    return 0
 
 
 
 
-def isPlacable(myMap, coord):
+def is_placable(map, coord):
     i = -1
     while i < 2:
         k = - 1
@@ -23,78 +20,65 @@ def isPlacable(myMap, coord):
             
             if verifX < 0:
                 i += 1
-            elif verifX == len(myMap):
+            elif verifX == len(map):
                 break
-            if verifY == len(myMap[0]):
+            if verifY == len(map[0]):
                 break
             elif verifY < 0:
                 k += 1
             
-            if myMap[coord[0] + i][coord[1] + k] != '⬜':
+            if map[coord[0] + i][coord[1] + k] != '⬜':
                 return True
             k += 1
         i += 1
     print("Veuillez entrer des valeur valide")
     return False
 
-def verif(myMap):
-    return 0
+
 
  
-def verifCase(myMap, coord):
+def verif_case(map, coord):
     
-    if myMap[coord[0]][coord[1]] != '⬜':
+    if map[coord[0]][coord[1]] != '⬜':
         print("Veuillez entrer des valeurs valide \n")
         return False
     return True
 
 
-def verifDiagonal(myMap, playerColr, coord):
-    
-    return 0
 
 
-def verifLineColumn(myMap, coord):
-
-    return 0
-def playerC(colorTable,userName):
-    playerAndColorTable = []
-    for i in range(len(userName)):
-        print(userName[i],"choisissez une couleur")
-        for k in range(len(colorTable)):
-            print(k + 1,'-',colorTable[k])
-        plResponse = int(input("Numero de la couleur ")) - 1
-        playerAndColorTable.append([userName[i],colorTable[plResponse]])
-        if len(colorTable) > 1:
-            print(plResponse)
-            colorTable.pop(plResponse)
-    print(playerAndColorTable) 
+def player_c(color_table,user_name):
+    player_and_color_table = []
+    for i in range(len(user_name)):
+        print(user_name[i],"choisissez une couleur")
+        for k in range(len(color_table)):
+            print(k + 1,'-',color_table[k])
+        pl_response = int(input("Numero de la couleur ")) - 1
+        player_and_color_table.append([user_name[i],color_table[pl_response]])
+        if len(color_table) > 1:
+            print(pl_response)
+            color_table.pop(pl_response)
+    print(player_and_color_table) 
         
-    return playerAndColorTable
+    return player_and_color_table
 
-def turn(playerAndColrTable,i):
-    print("c'est au tour de ",playerAndColrTable[i][0],"avec la couleur",playerAndColrTable[i][1] )
+def turn(player_and_colr_table,i):
+    print("c'est au tour de ",player_and_colr_table[i][0],"avec la couleur",player_and_colr_table[i][1] )
     return 0
 
-def replaceColor(playerColr,myMap,caseLst):
-    return None
-    
-def playerColor(userName,playerColorTable):
-
-    return None
 
 # Cette fonction permet de creer une carte 
-def makeMap(long):
+def make_map(long):
 
     table = []
 
     for i in range(long):
-        subTable = []
+        sub_table = []
         for j in range(long):
-            subTable.append(i*j)
-            subTable[j] = '⬜'
+            sub_table.append(i*j)
+            sub_table[j] = '⬜'
             
-        table.append(subTable)
+        table.append(sub_table)
         
     middle = int(long/2)
     if long % 2 == 0:
@@ -111,30 +95,30 @@ def makeMap(long):
     return table
 
 
-def convertCoordinate(choice):
+def convert_coordinate(choice):
     if not (1 <= len(choice) <= 3):
         return None
     if len(choice) == 3:
-        nbChoice = choice[1] + choice[2]
+        nb_choice = choice[1] + choice[2]
     else:
-        nbChoice = choice[1]
+        nb_choice = choice[1]
     alphab = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     coordx = alphab.index(choice[0])
-    coordy = int(nbChoice) - 1
+    coordy = int(nb_choice) - 1
     coord = [coordx,coordy]
     return coord
 
 # Cette fonction permet de placer une boule sur la carte
-def placeBall(liste, playerColr, coordx,coordy):
+def place_ball(liste, player_colr, coordx,coordy):
     
-    liste[coordx][coordy] = playerColr
+    liste[coordx][coordy] = player_colr
     
     return liste
 
 
 # Cette fonction affiche la carte
-def affMap(lst):
+def aff_map(lst):
 
     for i in range(len(lst)):
         if i == 0:
@@ -151,42 +135,42 @@ def affMap(lst):
     return None
 
 
-userName = []
-nbPlayer = int(input("Quelle est le nombre de joueur \n"))
-assert nbPlayer <= 4
+user_name = []
+nb_player = int(input("Quelle est le nombre de joueur \n"))
+assert nb_player <= 4
 
-for i in range(nbPlayer):
+for i in range(nb_player):
     print("Quel est le nom du joueur  ",i + 1)
-    Name = input("")
-    userName.append(Name)
+    name = input("")
+    user_name.append(name)
 
 # on laisse l'utilisateur choisir la taille du tableau
 print("Quelles sont les longueurs des cotes souhaites")
 
 long = int(input("taille du plateau ? \n"))
 
-playerColorTable = ["🟨","🟩","🟦","🟥"]
+player_color_table = ["🟨","🟩","🟦","🟥"]
 
-myMap = makeMap(long)
-playerAndColrTable = playerC(playerColorTable,userName)
+map = map(long)
+player_and_colr_table = player_c(player_color_table,user_name)
 
-affMap(myMap)
+aff_map(map)
 play = True
 verification = False
 #fonction principale de jeu
 
 while play:
     
-    for i in range(len(playerAndColrTable)):
+    for i in range(len(player_and_colr_table)):
         verification = False
-        turn(playerAndColrTable,i)
+        turn(player_and_colr_table,i)
         while not verification:
             print("coord allant de A a "f'{chr(65 + long - 1)}' " et de 1 a",long)
             choice = input("")
-            coord = convertCoordinate(choice)
-            verification = verifCase(myMap, coord) and isPlacable(myMap,coord)
+            coord = convert_coordinate(choice)
+            verification = verif_case(map, coord) and is_placable(map,coord)
             
-        myMap = placeBall(myMap,playerAndColrTable[i][1],coord[0],coord[1])
+        map = place_ball(map,player_and_colr_table[i][1],coord[0],coord[1])
              
-        affMap(myMap)
-    #verif(myMap)
+        aff_map(map)
+    #verif(map)
