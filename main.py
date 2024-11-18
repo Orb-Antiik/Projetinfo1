@@ -55,12 +55,17 @@ def verifDiagonal(myMap, playerColr, coord):
 def verifLineColumn(myMap, coord):
 
     return 0
-def player(colorTable,userName):
+def playerC(colorTable,userName):
     playerAndColorTable = []
     for i in range(len(userName)):
-        print(userName[i],"choisissez une couleur \n 1-",colorTable[0],' \n 2-',colorTable[1],"\n 3-",colorTable[2],' \n 4-',colorTable[3])
+        print(userName[i],"choisissez une couleur")
+        for k in range(len(colorTable)):
+            print(k + 1,'-',colorTable[k])
         plResponse = int(input("Numero de la couleur ")) - 1
         playerAndColorTable.append([userName[i],colorTable[plResponse]])
+        if len(colorTable) > 1:
+            print(plResponse)
+            colorTable.pop(plResponse)
     print(playerAndColorTable) 
         
     return playerAndColorTable
@@ -73,13 +78,13 @@ def playerColor(userName,playerColorTable):
     return None
 
 # Cette fonction permet de creer une carte 
-def makeMap(long,hauteur):
+def makeMap(long):
 
     table = []
 
     for i in range(long):
         subTable = []
-        for j in range(hauteur):
+        for j in range(long):
             subTable.append(i*j)
             subTable[j] = '⬜'
             
@@ -135,6 +140,7 @@ def affMap(lst):
        if i == 0:
            print("")
        print(f"{chr(65 + i)} " + " ".join(x for x in lst[i]))
+       
     
     return None
 
@@ -144,15 +150,15 @@ nbPlayer = int(input("Quelle est le nombre de joueur \n"))
 assert nbPlayer <= 4
 
 for i in range(nbPlayer):
-    print("Quel est le nom du joueur \n",i)
+    print("Quel est le nom du joueur  ",i + 1)
     Name = input("")
     userName.append(Name)
 
 # on laisse l'utilisateur choisir la taille du tableau
 print("Quelles sont les longueurs des cotes souhaites")
 
-long = int(input("longueur du plateau \n"))
-hauteur = int(input("largeur du plateau \n"))
+long = int(input("taille du plateau ? \n"))
+
 playerColorTable = ["🟨","🟩","🟦","🟥"]
 random.shuffle(playerColorTable)
 
@@ -160,9 +166,8 @@ print("l'ordre des joueur est", playerColorTable)
 
 
 
-myMap = makeMap(long, hauteur)
-player(playerColorTable,userName)
-myMap = makeMap(long, hauteur)
+myMap = makeMap(long)
+playerC(playerColorTable,userName)
 
 affMap(myMap)
 play = True
