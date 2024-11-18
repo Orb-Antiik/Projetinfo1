@@ -9,6 +9,8 @@ def config(myMap,configNb):
     return 0
 
 
+
+
 def isPlacable(myMap, coord):
     i = -1
     while i < 2:
@@ -69,6 +71,10 @@ def playerC(colorTable,userName):
     print(playerAndColorTable) 
         
     return playerAndColorTable
+
+def turn(playerAndColrTable,i):
+    print("c'est au tour de ",playerAndColrTable[i][0],"avec la couleur",playerAndColrTable[i][1] )
+    return 0
 
 def replaceColor(playerColr,myMap,caseLst):
     return None
@@ -160,14 +166,9 @@ print("Quelles sont les longueurs des cotes souhaites")
 long = int(input("taille du plateau ? \n"))
 
 playerColorTable = ["🟨","🟩","🟦","🟥"]
-random.shuffle(playerColorTable)
-
-print("l'ordre des joueur est", playerColorTable)
-
-
 
 myMap = makeMap(long)
-playerC(playerColorTable,userName)
+playerAndColrTable = playerC(playerColorTable,userName)
 
 affMap(myMap)
 play = True
@@ -176,15 +177,16 @@ verification = False
 
 while play:
     
-    for i in range(len(playerColorTable)):
+    for i in range(len(playerAndColrTable)):
         verification = False
+        turn(playerAndColrTable,i)
         while not verification:
-            
-            choice = input("coord (allant de A a maxIndex et de 1 a maxIndex) \n")
+            print("coord allant de A a "f'{chr(65 + long - 1)}' " et de 1 a",long)
+            choice = input("")
             coord = convertCoordinate(choice)
             verification = verifCase(myMap, coord) and isPlacable(myMap,coord)
             
-        myMap = placeBall(myMap,playerColorTable[i],coord[0],coord[1])
+        myMap = placeBall(myMap,playerAndColrTable[i][1],coord[0],coord[1])
              
         affMap(myMap)
     #verif(myMap)
