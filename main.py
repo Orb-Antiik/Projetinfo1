@@ -73,7 +73,8 @@ def turn(player_and_colr_table,i):
     return 0
 
 
-# Cette fonction permet de creer une carte 
+# Cette fonction permet de creer un plateau
+ 
 def make_map(cote):
 
     table = []
@@ -100,7 +101,7 @@ def make_map(cote):
     return table
 
 
-def convert_coordinate(choice):
+def convert_coordinate(choice):                 #transforme coordonnees lettre chiffre en coordonnees de liste
     if not (1 <= len(choice) <= 3):
         return None
     if len(choice) == 3:
@@ -140,6 +141,66 @@ def aff_map(lst):
     return None
 
 
+
+def voisin_axe(my_map,coord,cote):
+    lst_voisin = []
+    x,y = coord
+    for i in range(1,cote):
+        if x-i>= 0:
+            lst_voisin.append((x-i,y))
+
+    for i in range(1,cote):
+        if x+i < cote:
+            lst_voisin.append((x+i,y))
+
+    for i in range(1,cote):
+        if y-i >= 0:
+            lst_voisin.append((x,y-i))
+
+    for i in range(1,cote):
+        if y+i<cote:
+            lst_voisin.append((x,y+i))
+
+    return lst_voisin
+
+
+
+
+def voisin_diag(my_map,coord,cote):
+    l_diag = []
+    x,y = coord
+    for i in range(1,cote):                 #haut gauche
+        if x-i >= 0 and y-i >= 0:
+            l_diag.append((x-i,y-i))
+
+        
+    for i in range(1,cote):                 #bas gauche
+        if x +i < cote and y-i >= 0:
+            l_diag.append((x+i,y-i))
+
+    
+    for i in range(1,cote):                 #haut droite
+        if y+i < cote and x-i >= 0:
+            l_diag.append((x-i,y+i))
+
+    
+    for i in range(1,cote):
+        if y+i< cote and x+i < cote:       #bas droite
+            l_diag.append((x+i,y+i))
+
+    return l_diag
+
+
+
+
+
+
+
+
+
+
+
+
 user_name = []
 nb_player = int(input("Quelle est le nombre de joueur \n"))
 assert nb_player <= 4
@@ -163,7 +224,8 @@ aff_map(my_map)
 play = True
 verification = False
 
-#fonction principale de jeu---------------------------------------------------------------------------------
+
+#Main du jeu------------------------------------------------------------------------------------------------------------------------------------------
 
 
 if __name__=="__main__":
@@ -175,9 +237,20 @@ if __name__=="__main__":
             while not verification:
                 print("coord allant de A a "f'{chr(65 + cote - 1)}' " et de 1 a",cote) #chr tu vas chercher un caractère avec son indice dans la table ascii
                 choice = input("")
+
                 coord = convert_coordinate(choice)
+
                 verification = verif_case(my_map, coord) and is_placable(my_map,coord)
+
+                axe = voisin_axe(my_map,coord,cote)
+                
+                diag = voisin_diag(my_map,coord,cote)
+
                 play = game_continue(my_map)
+
+
             my_map = place_ball(my_map,player_and_colr_table[i][1],coord[0],coord[1])
+            print("Les coordonnes axiales voisines sont",axe)
+            print("Les coordonnes diag voisines sont",diag)
                 
             aff_map(my_map)
