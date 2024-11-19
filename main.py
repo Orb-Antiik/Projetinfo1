@@ -2,11 +2,7 @@
 import random
 import sys
 
-#fonctions utilitaires
-
-
-
-
+#fonctions utilitaires--------------------------------------------------------------------
 
 def is_placable(my_map, coord):
     i = -1
@@ -18,36 +14,46 @@ def is_placable(my_map, coord):
                 k += 1
             verifX,verifY = coord[0] + i,coord[1] + k
             
-            if verifX < 0:
+            if verifX < 0:              #Permet de vérifier si il y a dépassement en haut
                 i += 1
-            elif verifX == len(my_map):
+            elif verifX == len(my_map): #Permet de vérifier si il y a dépassement en bas
                 break
-            if verifY == len(my_map[0]):
+            if verifY == len(my_map[0]): #Permet de vérifier si il y a dépassement à droite 
                 break
-            elif verifY < 0:
+            elif verifY < 0:            #Permet de vérifier si il y a dépassement à gauche
                 k += 1
             
             if my_map[coord[0] + i][coord[1] + k] != '⬜':
                 return True
             k += 1
         i += 1
-    print("Veuillez entrer des valeur valide")
+    print("Veuillez entrer des valeurs valides")
     return False
 
 
+def game_continue(my_map):      #Détermine quand la partie finie !!!
+    lost_lst = []
+    for elt in my_map:
+        for sous_liste in elt:
+            lost_lst.append(sous_liste)
+    for elt in lost_lst:
+        if elt == '⬜':
+            return True
+        print("La partie est terminée !")
+        return False
 
  
 def verif_case(my_map, coord):
     
     if my_map[coord[0]][coord[1]] != '⬜':
-        print("Veuillez entrer des valeurs valide \n")
+        print("Veuillez entrer des valeurs valides \n")
         return False
     return True
 
 
 
 
-def player_c(color_table,user_name):
+def player_c(color_table,user_name):        #Associe une couleur choisie par le joueur au joueur 
     player_and_color_table = []
     for i in range(len(user_name)):
         print(user_name[i],"choisissez une couleur")
@@ -68,20 +74,19 @@ def turn(player_and_colr_table,i):
 
 
 # Cette fonction permet de creer une carte 
-def make_map(long):
+def make_map(cote):
 
     table = []
 
-    for i in range(long):
+    for i in range(cote):
         sub_table = []
-        for j in range(long):
+        for j in range(cote):
             sub_table.append(i*j)
             sub_table[j] = '⬜'
-            
         table.append(sub_table)
         
-    middle = int(long/2)
-    if long % 2 == 0:
+    middle = int(cote/2)
+    if cote % 2 == 0:
         table[middle - 1][middle - 1] = '🟨'
         table[middle - 1][middle] = '🟩'
         table[middle ][middle - 1] ='🟦'
@@ -147,30 +152,32 @@ for i in range(nb_player):
 # on laisse l'utilisateur choisir la taille du tableau
 print("Quelles sont les longueurs des cotes souhaites")
 
-long = int(input("taille du plateau ? \n"))
+cote = int(input("taille du plateau ? \n"))
 
 player_color_table = ["🟨","🟩","🟦","🟥"]
 
-my_map = make_map(long)
+my_map = make_map(cote)
 player_and_colr_table = player_c(player_color_table,user_name)
 
 aff_map(my_map)
 play = True
 verification = False
-#fonction principale de jeu
 
-while play:
-    
-    for i in range(len(player_and_colr_table)):
-        verification = False
-        turn(player_and_colr_table,i)
-        while not verification:
-            print("coord allant de A a "f'{chr(65 + long - 1)}' " et de 1 a",long)
-            choice = input("")
-            coord = convert_coordinate(choice)
-            verification = verif_case(my_map, coord) and is_placable(my_map,coord)
-            
-        my_map = place_ball(my_map,player_and_colr_table[i][1],coord[0],coord[1])
-             
-        aff_map(my_map)
-    #verif(my_map)2
+#fonction principale de jeu---------------------------------------------------------------------------------
+
+
+if __name__=="__main__":
+    while play:
+        
+        for i in range(len(player_and_colr_table)):
+            verification = False
+            turn(player_and_colr_table,i)
+            while not verification:
+                print("coord allant de A a "f'{chr(65 + cote - 1)}' " et de 1 a",cote) #chr tu vas chercher un caractère avec son indice dans la table ascii
+                choice = input("")
+                coord = convert_coordinate(choice)
+                verification = verif_case(my_map, coord) and is_placable(my_map,coord)
+                play = game_continue(my_map)
+            my_map = place_ball(my_map,player_and_colr_table[i][1],coord[0],coord[1])
+                
+            aff_map(my_map)
