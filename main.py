@@ -142,21 +142,22 @@ def aff_map(lst):
 
 
 
-def voisin_axe(my_map,coord,cote):
+def voisin_axe(my_map,coord,cote,player_and_color_table,i):
     """
     Retourne une liste  Retourne une liste des cordoonees voisines au point place par le joueur
     x = ligne du plateau
     y = colonne du plateau
     cote = longueur et largeur du plateau 
 
-
     """
-    
     lst_voisin = []
     x,y = coord
-    for i in range(1,cote):         #haut     
-        if x-i>= 0:
-            lst_voisin.append((x-i,y))
+    for k in range(1,cote):                                             #haut     
+        if x-k>= 0 and my_map[x-k][y] == player_and_colr_table[i][1]:
+            lst_voisin.append((x-k,y))
+            for m in range(1,k+1):
+                if x-k+m >= 0:
+                    my_map[x-k+m][y] = player_and_colr_table[i][1]
 
     for i in range(1,cote):         #bas
         if x+i < cote:
@@ -210,6 +211,58 @@ def voisin_diag(my_map,coord,cote):
 
 
 
+def capture_axe(lst_voisin,my_map,player_and_colr_table,i):
+    for x,y in lst_voisin:
+        if my_map[x][y] == '⬜':
+            break
+
+        if my_map[x][y] == player_and_colr_table[i][1]:
+            my_map[x][y] = player_and_colr_table[i][1]
+        pass
+
+            
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -219,8 +272,8 @@ def voisin_diag(my_map,coord,cote):
 
 
 user_name = []
-nb_player = int(input("Quelle est le nombre de joueur \n"))
-assert nb_player <= 4
+nb_player = int(input("Quelle est le nombre de joueur entre 2 et 4 \n"))
+assert 2 <= nb_player <= 4
 
 for i in range(nb_player):
     print("Quel est le nom du joueur  ",i + 1)
@@ -259,12 +312,14 @@ if __name__=="__main__":
 
                 verification = verif_case(my_map, coord) and is_placable(my_map,coord)
 
-                axe = voisin_axe(my_map,coord,cote)
                 
                 diag = voisin_diag(my_map,coord,cote)
 
                 play = game_continue(my_map)
 
+
+            axe = voisin_axe(my_map,coord,cote,player_and_colr_table,i)
+                
 
             my_map = place_ball(my_map,player_and_colr_table[i][1],coord[0],coord[1])
             print("Les coordonnes axiales voisines sont",axe)
