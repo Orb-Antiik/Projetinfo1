@@ -83,12 +83,12 @@ def make_map(cote):
         sub_table = []
         for j in range(cote):
             sub_table.append(i*j)
-            sub_table[j] = '⬜'
+            sub_table[j] = '🟨'
         table.append(sub_table)
         
     middle = int(cote/2)
     if cote % 2 == 0:
-        table[middle - 1][middle - 1] = '🟨'
+        table[middle - 1][middle - 1] = '⬜'
         table[middle - 1][middle] = '🟩'
         table[middle ][middle - 1] ='🟦'
         table[middle][middle] = '🟥'
@@ -144,7 +144,7 @@ def aff_map(lst):
 
 def voisin_axe(my_map,coord,cote,player_and_color_table,i):
     """
-    Retourne une liste  Retourne une liste des cordoonees voisines au point place par le joueur
+    Capture en axiale les coordonnes voisines au point place par le joueur
     x = ligne du plateau
     y = colonne du plateau
     cote = longueur et largeur du plateau 
@@ -155,29 +155,38 @@ def voisin_axe(my_map,coord,cote,player_and_color_table,i):
     for k in range(1,cote):                                             #haut     
         if x-k>= 0 and my_map[x-k][y] == player_and_colr_table[i][1]:
             lst_voisin.append((x-k,y))
-            for m in range(1,k+1):
-                if x-k+m >= 0:
-                    my_map[x-k+m][y] = player_and_colr_table[i][1]
+            for m in range(1,k):
+                my_map[x-m][y] = player_and_colr_table[i][1]
 
-    for i in range(1,cote):         #bas
-        if x+i < cote:
-            lst_voisin.append((x+i,y))
 
-    for i in range(1,cote):         #gauche 
-        if y-i >= 0:
+    for k in range(1,cote):                                             #bas
+        if x+k < cote and my_map[x+k][y] == player_and_colr_table[i][1]:
+            lst_voisin.append((x+k,y))
+            for m in range(1,k):
+                my_map[x+m][y] = player_and_colr_table[i][1]
+
+
+    for k in range(1,cote):                                             #gauche 
+        if y-k >= 0 and my_map[x][y-k] == player_and_colr_table[i][1]:         
             lst_voisin.append((x,y-i))
+            for m in range(1,k):
+                my_map[x][y-m] = player_and_colr_table[i][1]
 
-    for i in range(1,cote):         #droite
-        if y+i<cote:
+
+    for k in range(1,cote):                                             #droite
+        if y+k<cote and my_map[x][y+k] == player_and_colr_table[i][1]:
             lst_voisin.append((x,y+i))
+            for m in range(1,k):
+                my_map[x][y+m] = player_and_colr_table[i][1]
+
 
     return lst_voisin
 
+#PROBLEME AVEC LES CASES BLANCHES DONC CONDITION A REVOIR
 
 
-
-def voisin_diag(my_map,coord,cote):
-    """Retourne une liste des cordoonees voisines au point place par le joueur
+def voisin_diag(my_map,coord,cote,player_and_colr_table,i):
+    """Capture en diagonale les cordoonees voisines au point place par le joueur
     x = ligne du plateau
     y = colonne du plateau
     cote = longueur et largeur du plateau 
@@ -187,79 +196,62 @@ def voisin_diag(my_map,coord,cote):
 
     l_diag = []
     x,y = coord
-    for i in range(1,cote):                 #haut gauche
-        if x-i >= 0 and y-i >= 0:
-            l_diag.append((x-i,y-i))
+    for k in range(1,cote):                 #haut gauche
+        if x-k >= 0 and y-k >= 0 and my_map[x-k][y-k] == player_and_colr_table[i][1] :
+            l_diag.append((x-k,y-k))
+            for m in range(1,k):
+                my_map[x-m][y-m] = player_and_colr_table[i][1]
 
         
-    for i in range(1,cote):                 #bas gauche
-        if x +i < cote and y-i >= 0:
-            l_diag.append((x+i,y-i))
+    for k in range(1,cote):                 #bas gauche
+        if x +k < cote and y-k >= 0 and my_map[x+k][y-k] == player_and_colr_table[i][1]:
+            l_diag.append((x+k,y-k))
+            for m in range(1,k):
+                 my_map[x+m][y-m] = player_and_colr_table[i][1]
 
     
-    for i in range(1,cote):                 #haut droite
-        if y+i < cote and x-i >= 0:
-            l_diag.append((x-i,y+i))
+    for k in range(1,cote):                 #haut droite
+        if y+k < cote and x-k >= 0 and my_map[x-k][y+k] == player_and_colr_table[i][1]:
+            l_diag.append((x-k,y+k))
+            for m in range(1,k):
+                 my_map[x-m][y+m] = player_and_colr_table[i][1]
 
     
-    for i in range(1,cote):
-        if y+i< cote and x+i < cote:       #bas droite
-            l_diag.append((x+i,y+i))
+    for k in range(1,cote):
+        if y+k< cote and x+k < cote and my_map[x+k][y+k] == player_and_colr_table[i][1]:       #bas droite
+            l_diag.append((x+k,y+k))
+            for m in range(1,k):
+                 my_map[x+m][y+m] = player_and_colr_table[i][1]
 
     return l_diag
 
 
 
+def score(my_map):      #Détermine le score !!! je dois ajouter player color et i pour le print 
+    score_lst = []
+    r = 0
+    j = 0
+    v = 0
+    b = 0
+    for elt in my_map:
+        for sous_liste in elt:
+            score_lst.append(sous_liste)
+    for elt in score_lst:
+        if elt == '🟨':
+            j += 1
+        elif elt == '🟩':
+            v += 1
+        elif elt == '🟦':
+            b += 1
+        elif elt == '🟥':
+            r += 1
 
-def capture_axe(lst_voisin,my_map,player_and_colr_table,i):
-    for x,y in lst_voisin:
-        if my_map[x][y] == '⬜':
-            break
-
-        if my_map[x][y] == player_and_colr_table[i][1]:
-            my_map[x][y] = player_and_colr_table[i][1]
-        pass
+    print("Le score est :" "-rouge =",r,"-jaune =",j,"-bleu =",b,"-vert = ",v)
+    
+    return j,v,b,j
 
             
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -290,6 +282,8 @@ player_color_table = ["🟨","🟩","🟦","🟥"]
 my_map = make_map(cote)
 player_and_colr_table = player_c(player_color_table,user_name)
 
+scoregame = score(my_map)
+
 aff_map(my_map)
 play = True
 verification = False
@@ -312,17 +306,14 @@ if __name__=="__main__":
 
                 verification = verif_case(my_map, coord) and is_placable(my_map,coord)
 
-                
-                diag = voisin_diag(my_map,coord,cote)
-
                 play = game_continue(my_map)
 
-
+            diag = voisin_diag(my_map,coord,cote,player_and_colr_table,i)
             axe = voisin_axe(my_map,coord,cote,player_and_colr_table,i)
                 
 
             my_map = place_ball(my_map,player_and_colr_table[i][1],coord[0],coord[1])
-            print("Les coordonnes axiales voisines sont",axe)
-            print("Les coordonnes diag voisines sont",diag)
-                
+            scoregame = score(my_map)
+            #print("Les coordonnes axiales voisines sont",axe)
+            #print("Les coordonnes diag voisines sont",diag)
             aff_map(my_map)
