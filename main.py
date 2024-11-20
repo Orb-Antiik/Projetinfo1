@@ -143,21 +143,30 @@ def aff_map(lst):
 
 
 def voisin_axe(my_map,coord,cote):
+    """
+    Retourne une liste  Retourne une liste des cordoonees voisines au point place par le joueur
+    x = ligne du plateau
+    y = colonne du plateau
+    cote = longueur et largeur du plateau 
+
+
+    """
+    
     lst_voisin = []
     x,y = coord
-    for i in range(1,cote):
+    for i in range(1,cote):         #haut     
         if x-i>= 0:
             lst_voisin.append((x-i,y))
 
-    for i in range(1,cote):
+    for i in range(1,cote):         #bas
         if x+i < cote:
             lst_voisin.append((x+i,y))
 
-    for i in range(1,cote):
+    for i in range(1,cote):         #gauche 
         if y-i >= 0:
             lst_voisin.append((x,y-i))
 
-    for i in range(1,cote):
+    for i in range(1,cote):         #droite
         if y+i<cote:
             lst_voisin.append((x,y+i))
 
@@ -167,6 +176,14 @@ def voisin_axe(my_map,coord,cote):
 
 
 def voisin_diag(my_map,coord,cote):
+    """Retourne une liste des cordoonees voisines au point place par le joueur
+    x = ligne du plateau
+    y = colonne du plateau
+    cote = longueur et largeur du plateau 
+
+
+    """
+
     l_diag = []
     x,y = coord
     for i in range(1,cote):                 #haut gauche
