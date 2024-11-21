@@ -83,12 +83,12 @@ def make_map(cote):
         sub_table = []
         for j in range(cote):
             sub_table.append(i*j)
-            sub_table[j] = '🟨'
+            sub_table[j] = '⬜'
         table.append(sub_table)
         
     middle = int(cote/2)
     if cote % 2 == 0:
-        table[middle - 1][middle - 1] = '⬜'
+        table[middle - 1][middle - 1] = '🟨'
         table[middle - 1][middle] = '🟩'
         table[middle ][middle - 1] ='🟦'
         table[middle][middle] = '🟥'
