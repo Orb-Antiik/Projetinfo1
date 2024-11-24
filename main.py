@@ -1,7 +1,7 @@
 #librairies importees 
 import random
 import sys
-
+print("ha")
 #fonctions utilitaires--------------------------------------------------------------------
 
 def is_placable(my_map, coord):
