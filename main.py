@@ -1,9 +1,12 @@
 #librairies importees 
 import random
 import sys
+from fltk import*
 
 #fonctions utilitaires--------------------------------------------------------------------
-
+cree_fenetre(1000,1000)
+rectangle(500,500,460,460,"black","",5)
+attend_fermeture()
 def is_placable(my_map, coord):
     i = -1
     while i < 2:
@@ -317,3 +320,7 @@ if __name__=="__main__":
             #print("Les coordonnes axiales voisines sont",axe)
             #print("Les coordonnes diag voisines sont",diag)
             aff_map(my_map)
+
+
+
+
