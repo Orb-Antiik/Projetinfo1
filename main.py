@@ -317,3 +317,8 @@ if __name__=="__main__":
             #print("Les coordonnes axiales voisines sont",axe)
             #print("Les coordonnes diag voisines sont",diag)
             aff_map(my_map)
+
+
+
+#Interface graphique---------------------------------------------------------------------------------------------------------------------------------------------------
+cree_fenetre(600,600)
