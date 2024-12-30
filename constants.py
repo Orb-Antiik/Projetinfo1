@@ -1,0 +1,8 @@
+LIGNE = 8
+COLONNE = 8
+TAILLE_CASE = 70
+LARGEUR_FEN = 1000
+HAUTEUR_FEN = 1000
+AD = int(LARGEUR_FEN/2 - (TAILLE_CASE * (LIGNE/2)))         #Centrer le plateau 
+X_OFFSET = AD/2      
+Y_OFFSET = AD

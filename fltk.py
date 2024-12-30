@@ -1,4 +1,3 @@
-
 import subprocess
 import sys
 import tkinter as tk
@@ -493,7 +492,7 @@ def arc(
         y + r,
         extent=ouverture,
         start=depart,
-        style=tk.ARC,
+        style=tk.PIESLICE,
         outline=couleur,
         fill=remplissage,
         width=epaisseur,
